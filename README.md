@@ -123,6 +123,26 @@ https://github.com/HuParry/huparry-skill/tree/main/hydro-problem-pack
 
 ## 打包辅助工具
 
+### 交互程序编写与编译
+
+交互裁判直接使用 `#include "testlib.h"`，由 Hydro 提供该头文件，不改名、不随题目重复打包，也不为它添加 `judge_extra_files`。本地通过编译器的 `-I` 指定标准 testlib.h 所在目录。
+
+本项目要求交互裁判和参考解保留默认 C++ 流同步和绑定，不关闭 `sync_with_stdio`，不调用 `cin.tie(nullptr)`。裁判用 testlib 的 `ouf` 读取命令、`cout << ... << endl` 回复，不能再用 `cin` 或 `scanf` 抢读同一输入通道。
+
+提供一份可编译的 [最小/最大值交互裁判示例](hydro-problem-pack/assets/interactive-minmax/interactor.cpp) 和 [配套参考解](hydro-problem-pack/assets/interactive-minmax/solution.cpp)，展示正确的计数、刷新、语义检查和结束流程。它们是具体题目的示例，不应直接套用到其他交互协议。
+
+交付前必须编译实际上传的源文件，再进行真实管道联测；编译失败不能交付为已完成。下面的命令既检查源码约定，也调用真实 C++17 编译器：
+
+```sh
+python hydro-problem-pack/scripts/check_interactive.py --interactor hydro/1/testdata/interactor.cpp --solution author/reference.cpp --testlib-dir 本地testlib目录 --compiler g++ --build-dir work/interactive-build
+```
+
+不指定 `--testlib-dir` 时仅做源码约定检查，不能据此宣称编译通过。详细要求见 [交互题规范](hydro-problem-pack/references/interactive.md)。
+
+交互示例已使用 Hydro 锁定的 testlib 提交 `2d20123984e9479b8a56ebe0d6a51e23ad7c35b3`、GCC 16.2.0、C++17 在本地编译通过，并验证 11 组正常交互（n 从 1 到 10000）、10 项协议探测、源码约定检查及真实编译失败时的阻断。该结果为 Windows 本地管道验证，不代表已在所有 Hydro 服务器或 Linux 沙箱中实测。
+
+### 题目导入包
+
 通常由 Codex 在执行 skill 时调用，无需手动操作。手动使用时，需要 Python 3.10 或更新版本；脚本只使用标准库。
 
 在仓库根目录运行：
@@ -157,6 +177,10 @@ hydro-problem-pack/
     sample-findings.md
   scripts/
     build_import.py
+    check_interactive.py
+  assets/interactive-minmax/
+    interactor.cpp
+    solution.cpp
 ```
 
 - [SKILL.md](hydro-problem-pack/SKILL.md)：完整入口与执行流程。

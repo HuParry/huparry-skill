@@ -18,7 +18,7 @@ description: 为 Hydro OJ 制作、修改和校验算法题数据包，支持常
 ## 对应类型
 
 - 常规题与 SPJ：阅读 [references/normal.md](references/normal.md)。
-- 交互题：阅读 [references/interactive.md](references/interactive.md)。
+- 交互题：阅读 [references/interactive.md](references/interactive.md)。裁判直接 `#include "testlib.h"`，使用 Hydro 自带头文件；裁判与参考解保留默认 C++ 流同步和绑定。交付前必须对实际源文件做标准头文件编译和真实管道联测，编译失败不能标为完成。
 - 通信题：阅读 [references/communication.md](references/communication.md)。
 - 三类共同的目录、配置与计分：阅读 [references/package-format.md](references/package-format.md)。
 - 题面含图片时（不论题型）：另读 [references/statement-images.md](references/statement-images.md)，把图片纳入 additional_file 并核对引用。

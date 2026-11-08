@@ -69,6 +69,8 @@ checker: checker.cc
 
 交互改为 `type: interactive`，配置 `interactor: interactor.cpp`；不要配置 communication 的 num_processes。
 
+标准 Hydro 会为 interactor 编译提供 testlib.h，源代码直接 `#include "testlib.h"`。不要仅为这个头文件添加 judge_extra_files，不要复制进 testdata，也不要改成 cf_testlib.h 等私有名称。本地编译通过 `-I 本地testlib目录` 提供依赖；本地工具依赖不属于导入包内容。
+
 通信改为：
 
 ```yaml
@@ -109,7 +111,7 @@ author/
 导入说明.md
 ```
 
-不含编译器、缓存、编译产物和未使用的依赖。裁判需要 testlib.h 等依赖时，核实目标平台是否自带，以及独立本地复测如何获取；不能直接把样例依赖缺失当成可编译。genlib.hpp 样例仅用于出题生成，不应无理由成为选手或评测端的依赖。
+不含编译器、缓存、编译产物和未使用的依赖。交互题按上文使用 Hydro 自带的 testlib.h；其他实际需要的依赖另行确认，并写清本地复测方法。若目标服务器明确不是标准 Hydro 环境，先核实编译设置，不自行绕过平台头文件。genlib.hpp 样例仅用于出题生成，不应无理由成为选手或评测端的依赖。
 
 整题导入与已有题目的测试数据上传是不同入口：后者只上传 testdata 内容，并单独设置题面与元信息。交付说明避免混淆。
 
