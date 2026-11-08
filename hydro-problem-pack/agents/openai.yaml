@@ -1,0 +1,4 @@
+interface:
+  display_name: "Hydro 题目数据包"
+  short_description: "制作中文题面的 Hydro 常规、交互、通信题数据包与出题人资料"
+  default_prompt: "使用 $hydro-problem-pack，根据题面和样例格式制作 Hydro 题目数据包，并核对评测程序、数据及中文题解。"
